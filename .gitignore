@@ -1,0 +1,11 @@
+# Nextflow run files
+work/
+.nextflow/
+.nextflow.log*
+results/
+
+# Sequencing data (too large for Git)
+data/
+*.fastq
+*.fastq.gz
+*.fq.gz
