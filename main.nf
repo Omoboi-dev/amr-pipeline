@@ -1,6 +1,8 @@
 #!/usr/bin/env nextflow
 
-include { FASTP } from './modules/local/fastp'
+include { FASTP   } from './modules/local/fastp'
+include { SHOVILL } from './modules/local/shovill'
+include { QUAST   } from './modules/local/quast'
 
 workflow {
     if (!params.input) {
@@ -20,4 +22,10 @@ workflow {
         }
 
     FASTP(reads_ch)
+    SHOVILL(FASTP.out.reads)
+
+    all_contigs = SHOVILL.out.contigs
+        .map { meta, contigs -> contigs }
+        .collect()
+    QUAST(all_contigs)
 }
